@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مغامرة البركان - يوسف الدربي</title>
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Cairo:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#2b1458;--lava:#ff4d2e;--sun:#ffc826;--teal:#12c2b0;--sky:#6c4cff;--paper:#fff8ec;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100vh;font-family:'Cairo',system-ui,sans-serif;color:var(--ink);background:linear-gradient(180deg,#6c4cff 0%,#ff7a59 70%,#ffc826 100%);background-attachment:fixed}
+h1,h2{font-family:'Lalezar','Cairo',sans-serif;font-weight:400;margin:0}
+header{padding:14px 16px 6px;text-align:center;color:#fff}
+header h1{font-size:2rem;text-shadow:0 3px 0 rgba(43,20,88,.35)}
+header small{display:block;font-weight:800;opacity:.95}
+.bar{display:flex;gap:6px;justify-content:center;margin:8px auto;max-width:420px}
+.dot{flex:1;height:10px;border-radius:9px;background:rgba(255,255,255,.35)}
+.dot.on{background:var(--sun)}
+main{max-width:560px;margin:0 auto;padding:8px 14px 90px}
+.card{background:var(--paper);border:4px solid var(--ink);border-radius:26px;padding:16px;box-shadow:0 8px 0 var(--ink)}
+.card h2{font-size:1.6rem;margin-bottom:6px}
+.btn{font:inherit;font-weight:800;font-size:1.1rem;border:3px solid var(--ink);background:var(--sun);color:var(--ink);border-radius:18px;padding:10px 18px;box-shadow:0 5px 0 var(--ink);cursor:pointer;min-height:48px}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
+.btn.red{background:var(--lava);color:#fff}
+.btn.teal{background:var(--teal)}
+.btn:disabled{opacity:.45}
+.btn:focus-visible,.hot:focus-visible{outline:4px solid var(--sky);outline-offset:3px}
+.info{min-height:78px;background:#fff;border:3px dashed var(--teal);border-radius:16px;padding:10px 12px;margin:10px 0;font-weight:600;line-height:1.7}
+svg{display:block;width:100%;height:auto}
+.hot{cursor:pointer}
+.hot circle.p{animation:pulse 1.4s infinite}
+.hot.done circle.p{animation:none;fill:var(--teal)}
+@keyframes pulse{50%{r:22}}
+.q button{display:block;width:100%;text-align:right;margin:8px 0}
+.ok{background:var(--teal)!important}.no{background:#ff9aa2!important}
+.row{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:10px;flex-wrap:wrap}
+.stars{font-size:1.6rem}
+#ar{position:relative;height:min(62vh,440px);border:4px solid var(--ink);border-radius:22px;overflow:hidden;background:linear-gradient(#8fd3ff,#d9f3ff 60%,#9bd36b 60%)}
+#cam{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+#vol{position:absolute;left:50%;bottom:6%;transform:translateX(-50%);width:62%;transition:width .2s}
+#fx{position:absolute;inset:0;pointer-events:none}
+.blob{position:absolute;border-radius:50%;background:radial-gradient(#ffe066,#ff4d2e);animation:fly 1.6s ease-out forwards}
+@keyframes fly{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--x),var(--y)) scale(.4);opacity:0}}
+.smoke{position:absolute;border-radius:50%;background:rgba(70,60,80,.55);animation:rise 2.4s ease-out forwards}
+@keyframes rise{0%{transform:translate(0,0) scale(.4);opacity:.9}100%{transform:translate(var(--x),-190px) scale(2.2);opacity:0}}
+.cert{text-align:center;border:6px double var(--lava);border-radius:20px;padding:14px;background:#fff}
+.cert .name{font-family:'Lalezar',sans-serif;font-size:2.6rem;color:var(--lava)}
+.sign{display:flex;justify-content:space-around;margin-top:12px;font-weight:800;font-size:.95rem}
+.sign span{display:block;border-top:2px solid var(--ink);padding-top:4px;margin-top:22px}
+@media (prefers-reduced-motion:reduce){.hot circle.p,.blob,.smoke{animation:none}}
+
+.sc{width:100%;border-radius:16px;border:3px solid var(--ink);margin:6px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tp{background:#fff;border:3px solid var(--ink);border-radius:16px;padding:6px;text-align:center;font-weight:800;font-size:.85rem}
+.tp svg{border-radius:10px}
+input.nm{font:inherit;font-weight:800;font-size:1.1rem;border:3px solid var(--ink);border-radius:14px;padding:8px 12px;width:100%;margin:8px 0}
+.emo{font-size:3rem;text-align:center;margin:6px 0}
+</style>
+</head>
+<body>
+<header>
+  <h1>🌋 مغامرة البراكين</h1>
+  <small>لعبة تعليمية لطالبات وطلاب الصف الثالث</small>
+  <small>تقديم: يوسف الدربي</small>
+</header>
+<div class="bar" id="bar"></div>
+<main id="app"></main>
+<footer style="text-align:center;color:#fff;font-weight:800;padding:0 14px 24px;line-height:1.8;text-shadow:0 2px 0 rgba(43,20,88,.4)">
+  مدرسة حكيم بن حزام<br>معلمة العلوم: أ. بدرية · مديرة المدرسة: أ. فاطمة الزهراني
+</footer>
+<script>
+const app=document.getElementById('app'),bar=document.getElementById('bar');
+const TOTAL=8;let stars=0,stream=null;
+const setBar=n=>{bar.innerHTML='';for(let i=0;i<TOTAL;i++)bar.innerHTML+=`<div class="dot${i<=n?' on':''}"></div>`};
+const stopCam=()=>{if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}};
+const STAR=()=>`<span class="stars" id="st">⭐ ${stars}</span>`;
+const upd=()=>{const e=document.getElementById('st');if(e)e.textContent='⭐ '+stars};
+
+/* ---------- رسم البركان ---------- */
+function V(mode,hs){
+  const m=mode;
+  let lava='',extra='';
+  if(m===0){lava=`<ellipse cx="200" cy="232" rx="62" ry="38" fill="#ff4d2e" stroke="#2b1458" stroke-width="4"/><ellipse cx="200" cy="232" rx="36" ry="19" fill="#ffc826"/><circle cx="180" cy="225" r="6" fill="#fff" opacity=".7"/><circle cx="215" cy="238" r="5" fill="#fff" opacity=".7"/>`}
+  if(m===1){lava=`<ellipse cx="200" cy="232" rx="62" ry="38" fill="#ff4d2e" stroke="#2b1458" stroke-width="4"/><ellipse cx="200" cy="232" rx="36" ry="19" fill="#ffc826"/><path d="M186 200 L214 200 L222 110 L178 110Z" fill="#ff7a2e"/><path d="M178 110 L222 110 L218 60 L182 60Z" fill="#ffc826"/>`}
+  if(m===2||m==='plain'){lava=`<ellipse cx="200" cy="232" rx="62" ry="38" fill="#ff4d2e" stroke="#2b1458" stroke-width="4"/><ellipse cx="200" cy="232" rx="36" ry="19" fill="#ffc826"/><path d="M178 60 L222 60 L214 200 L186 200Z" fill="#ff7a2e"/>`}
+  if(m===2){extra=`<g fill="#ff4d2e" stroke="#2b1458" stroke-width="3"><circle cx="150" cy="20" r="9"/><circle cx="255" cy="10" r="11"/><circle cx="200" cy="-5" r="8"/><circle cx="120" cy="45" r="7"/><circle cx="285" cy="40" r="8"/></g><g fill="#6b6478" opacity=".85"><circle cx="190" cy="30" r="22"/><circle cx="225" cy="18" r="26"/><circle cx="170" cy="8" r="18"/></g><path d="M170 52 L135 130 L160 130 L190 62Z M230 52 L265 130 L240 130 L210 62Z" fill="#ff4d2e" stroke="#2b1458" stroke-width="3"/>`}
+  return `<svg viewBox="0 -30 400 320" role="img" aria-label="رسم بركان">
+  <rect y="-30" width="400" height="320" rx="16" fill="${m===2?'#ffb37a':'#bfe9ff'}"/>
+  <circle cx="340" cy="10" r="22" fill="#ffd84d"/>
+  <path d="M10 280 L140 70 L165 50 L235 50 L260 70 L390 280Z" fill="#8a4b2a" stroke="#2b1458" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M60 280 L150 105 L250 105 L340 280Z" fill="#a85d34"/>
+  ${lava}
+  <path d="M165 50 Q200 30 235 50Z" fill="#ff4d2e" stroke="#2b1458" stroke-width="4"/>
+  ${extra}${hs||''}</svg>`;
+}
+function hot(k,x,y,n){return `<g class="hot" data-k="${k}" tabindex="0" role="button" aria-label="${n}"><circle class="p" cx="${x}" cy="${y}" r="16" fill="#ffc826" stroke="#2b1458" stroke-width="4"/><text x="${x}" y="${y+6}" text-anchor="middle" font-size="18" font-weight="800">${n}</text></g>`}
+
+/* نوع البركان: شكل بسيط */
+function T(kind){
+  const p={shield:'M10 150 Q200 60 390 150Z',strato:'M40 150 L170 30 L230 30 L360 150Z',cinder:'M110 150 L180 40 L220 40 L290 150Z'}[kind];
+  return `<svg viewBox="0 0 400 160"><rect width="400" height="160" fill="#d5f1ff"/><path d="${p}" fill="#a85d34" stroke="#2b1458" stroke-width="6" stroke-linejoin="round"/><path d="M0 150H400V160H0Z" fill="#6ac46a"/></svg>`}
+
+/* ---------- أدوات المراحل ---------- */
+function runQuiz(n,title,qs,next){
+  let i=0;setBar(n);
+  const show=()=>{
+    if(i>=qs.length)return next();
+    const [q,o,a,em]=qs[i];
+    app.innerHTML=`<div class="card q"><h2>${title}</h2><div class="emo">${em||'❓'}</div>
+    <p style="font-weight:800;font-size:1.15rem">سؤال ${i+1} من ${qs.length}: ${q}</p>
+    ${o.map((t,j)=>`<button class="btn" data-j="${j}">${t}</button>`).join('')}
+    <div class="row">${STAR()}<span id="msg" style="font-weight:800"></span></div></div>`;
+    app.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+      const j=+b.dataset.j,bs=app.querySelectorAll('button');bs.forEach(x=>x.disabled=true);
+      if(j===a){b.classList.add('ok');stars+=2;msg.textContent='أحسنت! 🎉'}
+      else{b.classList.add('no');bs[a].classList.add('ok');msg.textContent='حاول في السؤال القادم 💪'}
+      upd();setTimeout(()=>{i++;show()},1300);
+    });
+  };show();
+}
+
+/* ---------- 1: واقع معزز ---------- */
+function s0(){
+  setBar(0);let n=0;
+  app.innerHTML=`<div class="card"><h2>📷 المرحلة 1: بركان في غرفتك (واقع معزز)</h2>
+  <p style="margin:0 0 8px;font-weight:600">شغّل الكاميرا ووجّهها نحو الأرض، ثم أطلق الثوران 3 مرات!</p>
+  <div id="ar"><video id="cam" playsinline muted autoplay></video><div id="vol">${V('plain')}</div><div id="fx"></div></div>
+  <div class="row"><button class="btn teal" id="camb">📷 شغّل الكاميرا</button><button class="btn red" id="er">🌋 ثوران!</button></div>
+  <label style="display:block;margin-top:10px;font-weight:800">حجم البركان <input type="range" id="sz" min="35" max="90" value="62" style="width:100%"></label>
+  <div class="row">${STAR()}<button class="btn" id="next" disabled>التالي</button></div></div>`;
+  const vol=document.getElementById('vol'),fx=document.getElementById('fx');
+  sz.oninput=e=>vol.style.width=e.target.value+'%';
+  camb.onclick=async()=>{try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});cam.srcObject=stream;cam.style.display='block';ar.style.background='#000';camb.textContent='✅ الكاميرا تعمل'}catch(e){camb.textContent='الكاميرا غير متاحة، العب بدونها'}};
+  er.onclick=()=>{
+    const box=ar.getBoundingClientRect(),vb=vol.getBoundingClientRect(),cx=vb.left-box.left+vb.width/2,cy=vb.top-box.top+vb.height*.18;
+    for(let k=0;k<26;k++){const b=document.createElement('div');b.className='blob';const z=8+Math.random()*14;b.style.cssText=`width:${z}px;height:${z}px;left:${cx}px;top:${cy}px;--x:${(Math.random()-.5)*220}px;--y:${-60-Math.random()*190}px;animation-delay:${Math.random()*.25}s`;fx.appendChild(b);setTimeout(()=>b.remove(),2000)}
+    for(let k=0;k<8;k++){const m=document.createElement('div');m.className='smoke';const z=26+Math.random()*30;m.style.cssText=`width:${z}px;height:${z}px;left:${cx-z/2}px;top:${cy-20}px;--x:${(Math.random()-.5)*90}px;animation-delay:${Math.random()*.5}s`;fx.appendChild(m);setTimeout(()=>m.remove(),3200)}
+    vol.animate([{transform:'translateX(-50%) rotate(-2deg)'},{transform:'translateX(-50%) rotate(2deg)'},{transform:'translateX(-50%)'}],{duration:350,iterations:3});
+    n++;stars++;upd();if(n>=3)next.disabled=false;
+  };
+  next.onclick=()=>{stopCam();s1()};
+}
+
+/* ---------- 2: أجزاء البركان ---------- */
+const parts={crater:['🕳️ الفوهة','فتحة في أعلى البركان تخرج منها الحمم والغازات والرماد.'],cone:['⛰️ المخروط','جبل البركان، تكوّن من طبقات من الحمم والرماد تجمّدت.'],vent:['🔥 القناة','الأنبوب الذي تصعد منه الصهارة إلى الفوهة.'],magma:['🟠 غرفة الصهارة','هنا تتجمع الصهارة: صخور ذائبة شديدة الحرارة تحت الأرض.']};
+function s1(){
+  setBar(1);
+  app.innerHTML=`<div class="card"><h2>🔍 المرحلة 2: أجزاء البركان</h2>
+  <p style="margin:0 0 8px;font-weight:600">اضغط على الأرقام المتوهجة.</p>
+  ${V('plain',hot('crater',200,52,1)+hot('cone',268,130,2)+hot('vent',200,140,3)+hot('magma',200,222,4))}
+  <div class="info" id="info">اضغط على رقم لتبدأ 👆</div>
+  <div class="row">${STAR()}<button class="btn" id="next" disabled>التالي</button></div></div>`;
+  const seen=new Set();
+  app.querySelectorAll('.hot').forEach(h=>{const go=()=>{const k=h.dataset.k;info.innerHTML=`<b>${parts[k][0]}</b><br>${parts[k][1]}`;if(!seen.has(k)){seen.add(k);h.classList.add('done');stars++;upd()}if(seen.size===4)next.disabled=false};
+    h.onclick=go;h.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}}});
+  next.onclick=s2;
+}
+
+/* ---------- 3: كيف يثور البركان ---------- */
+function s2(){
+  setBar(2);let i=0;
+  const st=[['1️⃣ تسخين الصهارة','تحت الأرض تسخن الصخور حتى تذوب وتتحول إلى صهارة وتتكون فيها فقاعات غاز.'],['2️⃣ صعود الصهارة','الصهارة أخف من الصخور حولها، فتصعد عبر القناة نحو الفوهة بضغط كبير.'],['3️⃣ الثوران!','تخرج الحمم والرماد والغازات من الفوهة، وتنزل الحمم على جوانب البركان.']];
+  const show=()=>{app.innerHTML=`<div class="card"><h2>💥 المرحلة 3: كيف يثور البركان؟</h2>${V(i)}
+  <div class="info"><b>${st[i][0]}</b><br>${st[i][1]}</div>
+  <div class="row"><button class="btn teal" id="pv" ${i?'':'disabled'}>السابق</button>${STAR()}<button class="btn" id="nx">${i<2?'التالي':'أكمل'}</button></div></div>`;
+    pv.onclick=()=>{i--;show()};nx.onclick=()=>{if(i<2){i++;stars++;show()}else s3()}};show();
+}
+
+/* ---------- 4: أنواع البراكين ---------- */
+function s3(){
+  setBar(3);
+  app.innerHTML=`<div class="card"><h2>🗻 المرحلة 4: أنواع البراكين</h2>
+  <p style="margin:0 0 6px;font-weight:600">البراكين تختلف في الشكل:</p>
+  <div class="grid"><div class="tp">${T('shield')}دِرعي<br>واسع ومنخفض</div><div class="tp">${T('strato')}مخروطي<br>عالٍ ومتدرّج</div><div class="tp">${T('cinder')}رمادي<br>صغير وحاد</div></div>
+  <div class="info" style="margin-top:12px"><b>حسب نشاطه:</b><br>🔴 <b>نشط:</b> يثور من وقت لآخر.<br>🟡 <b>خامد:</b> نائم وقد يثور مرة أخرى.<br>⚫ <b>ميت:</b> لن يثور بعد الآن.</div>
+  <div class="row">${STAR()}<button class="btn" id="next">التالي</button></div></div>`;
+  next.onclick=()=>{stars++;runQuiz(3,'🧩 تحدي: أنواع البراكين',[['بركان نائم قد يثور مرة أخرى، ماذا نسميه؟',['نشط','خامد','ميت'],1,'😴'],['أي بركان واسع ومنخفض الشكل؟',['دِرعي','رمادي','لا أحد'],0,'🗻']],s4)};
+}
+
+/* ---------- 5: ماذا يخرج من البركان؟ ---------- */
+function s4(){
+  setBar(4);
+  const items=[['🔴 سائل أحمر ساخن يسيل على الجبل','حمم'],['🌫️ غبار رمادي يملأ السماء','رماد'],['💨 دخان وغازات تصعد للأعلى','غازات'],['🪨 صخور ذائبة تتجمد وتصبح صلبة','حمم'],['☁️ جزيئات صغيرة تهبط على المدينة','رماد']];
+  let i=0;
+  const show=()=>{
+    if(i>=items.length)return s5();
+    app.innerHTML=`<div class="card q"><h2>🎯 المرحلة 5: صنّف ما يخرج من البركان</h2>
+    <div class="emo">${items[i][0].split(' ')[0]}</div>
+    <p style="font-weight:800;font-size:1.15rem">${items[i][0].slice(items[i][0].indexOf(' ')+1)}</p>
+    ${['حمم','رماد','غازات'].map(t=>`<button class="btn">${t}</button>`).join('')}
+    <div class="row">${STAR()}<span id="msg" style="font-weight:800"></span></div></div>`;
+    app.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+      const bs=app.querySelectorAll('button');bs.forEach(x=>x.disabled=true);
+      if(b.textContent===items[i][1]){b.classList.add('ok');stars++;msg.textContent='صحيح! 🎉'}else{b.classList.add('no');[...bs].find(x=>x.textContent===items[i][1]).classList.add('ok');msg.textContent='تعلّمنا شيئًا جديدًا 💪'}
+      upd();setTimeout(()=>{i++;show()},1200)});
+  };show();
+}
+
+/* ---------- 6: السلامة ---------- */
+function s5(){
+  runQuiz(5,'🛡️ المرحلة 6: السلامة والفوائد',[
+   ['عند ثوران بركان قريب، نبتعد ونتبع تعليمات الكبار.',['صح','خطأ'],0,'🏃'],
+   ['رماد البراكين قد يجعل التربة خصبة بعد سنوات.',['صح','خطأ'],0,'🌱'],
+   ['نقترب من الحمم لنلتقط صورة جميلة.',['صح','خطأ'],1,'📸']],s6);
+}
+
+/* ---------- 7: الاختبار النهائي ---------- */
+function s6(){
+  runQuiz(6,'🏁 المرحلة 7: الاختبار الكبير',[
+   ['ما اسم الصخور الذائبة تحت الأرض؟',['الصهارة','الرمال','الجليد'],0,'🟠'],
+   ['ماذا نسمي الصهارة عندما تخرج من البركان؟',['ماء','حمم','هواء'],1,'🔥'],
+   ['من أين تخرج الحمم والرماد؟',['القاعدة','الفوهة','الغيوم'],1,'🌋'],
+   ['أي جزء يحمل الصهارة إلى الفوهة؟',['القناة','المخروط','الرماد'],0,'⬆️']],s7);
+}
+
+/* ---------- 8: الشهادة ---------- */
+function s7(){
+  setBar(7);
+  app.innerHTML=`<div class="card"><h2>🏆 أنهيت جميع المراحل!</h2>
+  <label style="font-weight:800">اكتب اسمك:<input class="nm" id="nm" placeholder="اسم الطالب أو الطالبة"></label>
+  <div class="cert"><div style="font-weight:800">شهادة مستكشف البراكين</div>
+  <p style="margin:6px 0">تُمنح هذه الشهادة لـ</p>
+  <div class="name" id="who">..........</div>
+  <p style="margin:6px 0;font-weight:600">لإتقانه درس البراكين وجمعه <b>${stars}</b> نجمة ⭐</p>
+  <div style="font-weight:800">مدرسة حكيم بن حزام</div>
+  <div style="font-weight:600;margin-top:4px">تقديم: يوسف الدربي</div>
+  <div class="sign"><div>معلمة العلوم<span>أ. بدرية</span></div><div>مديرة المدرسة<span>أ. فاطمة الزهراني</span></div></div></div>
+  <div class="row"><button class="btn" id="again">🔁 العب من جديد</button></div></div>`;
+  nm.oninput=()=>who.textContent=nm.value.trim()||'..........';
+  again.onclick=()=>{stars=0;s0()};
+}
+s0();
+</script>
+</body>
+</html>
